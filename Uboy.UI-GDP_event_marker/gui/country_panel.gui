@@ -1067,12 +1067,7 @@ types country_panel_types
         flowcontainer ={
             ### GDP EVENT HISTORY BUTTON (uboy_ui_gdpem)
             widget = {
-                #parentanchor = hcenter
                 size = { @panel_width_plus_14 60 }
-                
-                divider_clean = {
-                    parentanchor = top|hcenter
-                }
                 
                 button = {
                     parentanchor = hcenter
@@ -1084,6 +1079,19 @@ types country_panel_types
                     onclick = "[GetVariableSystem.Set('uboy_ui_gdpem_window_open', '(bool)yes')]"
                     
                     tooltip = "uboy_ui_gdpem_button_tooltip"
+                    
+                    hbox = {
+                        spacing = 10
+                        margin = { 10 0 }
+                        
+                        textbox = {
+                            layoutpolicy_horizontal = expanding
+                            text = "uboy_ui_gdpem_button_text"
+                            align = left|nobaseline
+                            elide = right
+                            default_format = "#clickable"
+                        }
+                    }
                 }
             }
         }

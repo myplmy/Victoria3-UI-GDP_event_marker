@@ -131,22 +131,22 @@ uboy_ui_gdpem_monthly_territory_check = {
 # 주 거래 (영토 획득/상실)
 # ==================================================================================================================== #
 
-on_traded_states = {
-    on_actions = {
-        uboy_ui_gdpem_on_state_trade
-    }
-}
-
-uboy_ui_gdpem_on_state_trade = {
-    effect = {
-        # 구매자 (영토 획득)
-        scope:buyer = {
-            uboy_ui_gdpem_record_event = { EVENT_TYPE = 4 }
-        }
-        
-        # 판매자 (영토 상실)
-        scope:seller = {
-            uboy_ui_gdpem_record_event = { EVENT_TYPE = 5 }
-        }
-    }
-}
+#on_traded_states = {
+#    on_actions = {
+#        uboy_ui_gdpem_on_state_trade
+#    }
+#}
+#
+#uboy_ui_gdpem_on_state_trade = {
+#    effect = {
+#        # 구매자 (영토 획득)
+#        scope:buyer = {
+#            uboy_ui_gdpem_record_event = { EVENT_TYPE = 4 }
+#        }
+#        
+#        # 판매자 (영토 상실)
+#        scope:seller = {
+#            uboy_ui_gdpem_record_event = { EVENT_TYPE = 5 }
+#        }
+#    }
+#}

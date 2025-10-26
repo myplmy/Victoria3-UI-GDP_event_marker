@@ -23,4 +23,4 @@
     uboy_ui_gdpem_icon_path_5: "gfx/interface/icons/generic_icons/minus.dds"
     
     # 마커 툴팁
-    uboy_ui_gdpem_marker_tooltip: "#header Historical Event#!\nQuarter [GetLocalVariable('uboy_ui_gdpem_quarter_index')]\n\nEvent Type: [GetLocalVariable('uboy_ui_gdpem_event_type_name')]"
+    uboy_ui_gdpem_marker_tooltip: "#header Historical Event#!\n\nCheck this marker to see what happened during this period."
