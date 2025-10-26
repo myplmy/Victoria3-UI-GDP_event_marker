@@ -1,0 +1,19 @@
+﻿l_korean:
+    # 윈도우
+    uboy_ui_gdpem_window_title: "GDP 이벤트 연혁"
+    uboy_ui_gdpem_button_text: "GDP 이벤트 연혁 보기"
+    uboy_ui_gdpem_button_tooltip: "시간에 따른 경제 및 정치 사건의 상세 내역을 확인합니다"
+    
+    # 그래프
+    uboy_ui_gdpem_legend_title: "이벤트 범례:"
+    uboy_ui_gdpem_description: "이 그래프는 국가 역사 동안 발생한 주요 경제 및 정치 사건을 보여줍니다. 각 마커는 해당 분기에 발생한 첫 번째 주요 사건을 나타냅니다."
+    
+    # 이벤트 타입
+    uboy_ui_gdpem_event_type_1: "전쟁/외교전 시작"
+    uboy_ui_gdpem_event_type_2: "전쟁/외교전 종료"
+    uboy_ui_gdpem_event_type_3: "기술 연구 완료"
+    uboy_ui_gdpem_event_type_4: "영토 획득"
+    uboy_ui_gdpem_event_type_5: "영토 상실"
+    
+    # 마커 툴팁
+    uboy_ui_gdpem_marker_tooltip: "#header 역사적 사건#!\n분기 [GetLocalVariable('uboy_ui_gdpem_quarter_index')]\n\n사건 유형: [GetLocalVariable('uboy_ui_gdpem_event_type_name')]"

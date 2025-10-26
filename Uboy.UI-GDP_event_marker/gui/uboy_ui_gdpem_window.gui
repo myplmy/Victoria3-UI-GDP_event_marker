@@ -1,0 +1,720 @@
+﻿# GDP Event Marker - Standalone Movable Window
+
+types uboy_ui_gdpem_window_types
+{
+    # 그래프 컨텐츠
+    type uboy_ui_gdpem_graph_content = flowcontainer {
+        datacontext = "[GetPlayer]"
+        direction = vertical
+        parentanchor = hcenter
+        spacing = 15
+        margin = { 10 10 }
+        
+        # 그래프 컨테이너
+        widget = {
+            size = { 640 350 }
+            
+            # 배경
+            background = {
+                using = paper_bg
+            }
+            
+            # 프레임
+            background = {
+                texture = "gfx/interface/graph/graph_frame.dds"
+                spriteType = Corneredtiled
+                spriteborder = { 2 2 }
+                texture_density = 2
+                margin = { 10 10 }
+                alpha = 0.85
+                
+                modify_texture = {
+                    texture = "gfx/interface/backgrounds/default_bg_shading.dds"
+                    spriteType = Corneredstretched
+                    spriteborder = { 0 0 }
+                    blend_mode = overlay
+                    alpha = 0.7
+                }
+            }
+            
+            # GDP 라인 그래프
+            widget = {
+                size = { 100% 100% }
+                margin = { 15 15 }
+                
+                plotline = {
+                    visible = "[Not(IsEmpty(GetPlayer.GetGDPTrend))]"
+                    size = { 100% 100% }
+                    using = plot_line
+                    width = 2.5
+                    color = { .9 .9 .9 1.0 }
+                    plotpoints = "[GetTrendPlotPointsNormalized(GetPlayer.GetGDPTrend, '(CFixedPoint)0', GetMax(GetPlayer.GetGDPTrend))]"
+                }
+                
+                # 데이터 없음 표시
+                textbox = {
+                    visible = "[IsEmpty(GetPlayer.GetGDPTrend)]"
+                    text = "GRAPH_NOT_INITIALIZED"
+                    parentanchor = center
+                    autoresize = yes
+                    align = center|nobaseline
+                }
+                
+                # 이벤트 마커 레이어
+                uboy_ui_gdpem_markers_container = {}
+            }
+            
+            # Y축
+            axis = {
+                size = { 100% 100% }
+                margin = { 15 15 }
+                direction = vertical
+                
+                axis_label = {
+                    textbox = {
+                        visible = "[Not(IsEmpty(GetPlayer.GetGDPTrend))]"
+                        autoresize = yes
+                        widgetanchor = vcenter|right
+                        parentanchor = left
+                        margin_right = 8
+                        margin_bottom = 10
+                        align = left|nobaseline
+                        using = fontsize_small
+                        raw_text = "0"
+                    }
+                }
+                
+                axis_label = {
+                    textbox = {
+                        visible = "[Not(IsEmpty(GetPlayer.GetGDPTrend))]"
+                        autoresize = yes
+                        widgetanchor = vcenter|right
+                        parentanchor = left
+                        margin_right = 8
+                        margin_top = 10
+                        align = left|nobaseline
+                        using = fontsize_small
+                        text = "[GetMax(GetPlayer.GetGDPTrend)|K]"
+                    }
+                }
+            }
+            
+            # X축
+            axis = {
+                size = { 100% 100% }
+                margin = { 15 15 }
+                direction = horizontal
+                
+                axis_label = {
+                    textbox = {
+                        visible = "[Not(IsEmpty(GetPlayer.GetGDPTrend))]"
+                        autoresize = yes
+                        widgetanchor = hcenter|bottom
+                        parentanchor = bottom|left
+                        margin_left = 5
+                        margin_top = 8
+                        align = center|nobaseline
+                        using = fontsize_small
+                        text = "[GetOldestDate(GetPlayer.GetGDPTrend)]"
+                    }
+                }
+                
+                axis_label = {
+                    textbox = {
+                        visible = "[Not(IsEmpty(GetPlayer.GetGDPTrend))]"
+                        autoresize = yes
+                        widgetanchor = hcenter|bottom
+                        parentanchor = bottom|right
+                        margin_right = 5
+                        margin_top = 8
+                        align = center|nobaseline
+                        using = fontsize_small
+                        text = "[GetLatestDate(GetPlayer.GetGDPTrend)]"
+                    }
+                }
+            }
+        }
+        
+        # 범례
+        uboy_ui_gdpem_legend = {}
+        
+        # 설명 텍스트
+        textbox = {
+            text = "uboy_ui_gdpem_description"
+            size = { 640 -1 }
+            autoresize = yes
+            multiline = yes
+            align = left|nobaseline
+            margin = { 10 10 }
+            using = fontsize_small
+        }
+    }
+    
+    # 이벤트 마커 컨테이너
+    type uboy_ui_gdpem_markers_container = widget {
+        size = { 100% 100% }
+        
+        # 마커들을 하단에 배치
+        widget = {
+            size = { 100% 40 }
+            parentanchor = bottom
+            margin_bottom = 5
+            
+            # 샘플 마커 (PowerShell로 400개 생성)
+            uboy_ui_gdpem_marker = { INDEX = 0 }
+            uboy_ui_gdpem_marker = { INDEX = 1 }
+            uboy_ui_gdpem_marker = { INDEX = 2 }
+            uboy_ui_gdpem_marker = { INDEX = 3 }
+            uboy_ui_gdpem_marker = { INDEX = 4 }
+            uboy_ui_gdpem_marker = { INDEX = 5 }
+            uboy_ui_gdpem_marker = { INDEX = 6 }
+            uboy_ui_gdpem_marker = { INDEX = 7 }
+            uboy_ui_gdpem_marker = { INDEX = 8 }
+            uboy_ui_gdpem_marker = { INDEX = 9 }
+            uboy_ui_gdpem_marker = { INDEX = 10 }
+            uboy_ui_gdpem_marker = { INDEX = 11 }
+            uboy_ui_gdpem_marker = { INDEX = 12 }
+            uboy_ui_gdpem_marker = { INDEX = 13 }
+            uboy_ui_gdpem_marker = { INDEX = 14 }
+            uboy_ui_gdpem_marker = { INDEX = 15 }
+            uboy_ui_gdpem_marker = { INDEX = 16 }
+            uboy_ui_gdpem_marker = { INDEX = 17 }
+            uboy_ui_gdpem_marker = { INDEX = 18 }
+            uboy_ui_gdpem_marker = { INDEX = 19 }
+            uboy_ui_gdpem_marker = { INDEX = 20 }
+            uboy_ui_gdpem_marker = { INDEX = 21 }
+            uboy_ui_gdpem_marker = { INDEX = 22 }
+            uboy_ui_gdpem_marker = { INDEX = 23 }
+            uboy_ui_gdpem_marker = { INDEX = 24 }
+            uboy_ui_gdpem_marker = { INDEX = 25 }
+            uboy_ui_gdpem_marker = { INDEX = 26 }
+            uboy_ui_gdpem_marker = { INDEX = 27 }
+            uboy_ui_gdpem_marker = { INDEX = 28 }
+            uboy_ui_gdpem_marker = { INDEX = 29 }
+            uboy_ui_gdpem_marker = { INDEX = 30 }
+            uboy_ui_gdpem_marker = { INDEX = 31 }
+            uboy_ui_gdpem_marker = { INDEX = 32 }
+            uboy_ui_gdpem_marker = { INDEX = 33 }
+            uboy_ui_gdpem_marker = { INDEX = 34 }
+            uboy_ui_gdpem_marker = { INDEX = 35 }
+            uboy_ui_gdpem_marker = { INDEX = 36 }
+            uboy_ui_gdpem_marker = { INDEX = 37 }
+            uboy_ui_gdpem_marker = { INDEX = 38 }
+            uboy_ui_gdpem_marker = { INDEX = 39 }
+            uboy_ui_gdpem_marker = { INDEX = 40 }
+            uboy_ui_gdpem_marker = { INDEX = 41 }
+            uboy_ui_gdpem_marker = { INDEX = 42 }
+            uboy_ui_gdpem_marker = { INDEX = 43 }
+            uboy_ui_gdpem_marker = { INDEX = 44 }
+            uboy_ui_gdpem_marker = { INDEX = 45 }
+            uboy_ui_gdpem_marker = { INDEX = 46 }
+            uboy_ui_gdpem_marker = { INDEX = 47 }
+            uboy_ui_gdpem_marker = { INDEX = 48 }
+            uboy_ui_gdpem_marker = { INDEX = 49 }
+            uboy_ui_gdpem_marker = { INDEX = 50 }
+            uboy_ui_gdpem_marker = { INDEX = 51 }
+            uboy_ui_gdpem_marker = { INDEX = 52 }
+            uboy_ui_gdpem_marker = { INDEX = 53 }
+            uboy_ui_gdpem_marker = { INDEX = 54 }
+            uboy_ui_gdpem_marker = { INDEX = 55 }
+            uboy_ui_gdpem_marker = { INDEX = 56 }
+            uboy_ui_gdpem_marker = { INDEX = 57 }
+            uboy_ui_gdpem_marker = { INDEX = 58 }
+            uboy_ui_gdpem_marker = { INDEX = 59 }
+            uboy_ui_gdpem_marker = { INDEX = 60 }
+            uboy_ui_gdpem_marker = { INDEX = 61 }
+            uboy_ui_gdpem_marker = { INDEX = 62 }
+            uboy_ui_gdpem_marker = { INDEX = 63 }
+            uboy_ui_gdpem_marker = { INDEX = 64 }
+            uboy_ui_gdpem_marker = { INDEX = 65 }
+            uboy_ui_gdpem_marker = { INDEX = 66 }
+            uboy_ui_gdpem_marker = { INDEX = 67 }
+            uboy_ui_gdpem_marker = { INDEX = 68 }
+            uboy_ui_gdpem_marker = { INDEX = 69 }
+            uboy_ui_gdpem_marker = { INDEX = 70 }
+            uboy_ui_gdpem_marker = { INDEX = 71 }
+            uboy_ui_gdpem_marker = { INDEX = 72 }
+            uboy_ui_gdpem_marker = { INDEX = 73 }
+            uboy_ui_gdpem_marker = { INDEX = 74 }
+            uboy_ui_gdpem_marker = { INDEX = 75 }
+            uboy_ui_gdpem_marker = { INDEX = 76 }
+            uboy_ui_gdpem_marker = { INDEX = 77 }
+            uboy_ui_gdpem_marker = { INDEX = 78 }
+            uboy_ui_gdpem_marker = { INDEX = 79 }
+            uboy_ui_gdpem_marker = { INDEX = 80 }
+            uboy_ui_gdpem_marker = { INDEX = 81 }
+            uboy_ui_gdpem_marker = { INDEX = 82 }
+            uboy_ui_gdpem_marker = { INDEX = 83 }
+            uboy_ui_gdpem_marker = { INDEX = 84 }
+            uboy_ui_gdpem_marker = { INDEX = 85 }
+            uboy_ui_gdpem_marker = { INDEX = 86 }
+            uboy_ui_gdpem_marker = { INDEX = 87 }
+            uboy_ui_gdpem_marker = { INDEX = 88 }
+            uboy_ui_gdpem_marker = { INDEX = 89 }
+            uboy_ui_gdpem_marker = { INDEX = 90 }
+            uboy_ui_gdpem_marker = { INDEX = 91 }
+            uboy_ui_gdpem_marker = { INDEX = 92 }
+            uboy_ui_gdpem_marker = { INDEX = 93 }
+            uboy_ui_gdpem_marker = { INDEX = 94 }
+            uboy_ui_gdpem_marker = { INDEX = 95 }
+            uboy_ui_gdpem_marker = { INDEX = 96 }
+            uboy_ui_gdpem_marker = { INDEX = 97 }
+            uboy_ui_gdpem_marker = { INDEX = 98 }
+            uboy_ui_gdpem_marker = { INDEX = 99 }
+            uboy_ui_gdpem_marker = { INDEX = 100 }
+            uboy_ui_gdpem_marker = { INDEX = 101 }
+            uboy_ui_gdpem_marker = { INDEX = 102 }
+            uboy_ui_gdpem_marker = { INDEX = 103 }
+            uboy_ui_gdpem_marker = { INDEX = 104 }
+            uboy_ui_gdpem_marker = { INDEX = 105 }
+            uboy_ui_gdpem_marker = { INDEX = 106 }
+            uboy_ui_gdpem_marker = { INDEX = 107 }
+            uboy_ui_gdpem_marker = { INDEX = 108 }
+            uboy_ui_gdpem_marker = { INDEX = 109 }
+            uboy_ui_gdpem_marker = { INDEX = 110 }
+            uboy_ui_gdpem_marker = { INDEX = 111 }
+            uboy_ui_gdpem_marker = { INDEX = 112 }
+            uboy_ui_gdpem_marker = { INDEX = 113 }
+            uboy_ui_gdpem_marker = { INDEX = 114 }
+            uboy_ui_gdpem_marker = { INDEX = 115 }
+            uboy_ui_gdpem_marker = { INDEX = 116 }
+            uboy_ui_gdpem_marker = { INDEX = 117 }
+            uboy_ui_gdpem_marker = { INDEX = 118 }
+            uboy_ui_gdpem_marker = { INDEX = 119 }
+            uboy_ui_gdpem_marker = { INDEX = 120 }
+            uboy_ui_gdpem_marker = { INDEX = 121 }
+            uboy_ui_gdpem_marker = { INDEX = 122 }
+            uboy_ui_gdpem_marker = { INDEX = 123 }
+            uboy_ui_gdpem_marker = { INDEX = 124 }
+            uboy_ui_gdpem_marker = { INDEX = 125 }
+            uboy_ui_gdpem_marker = { INDEX = 126 }
+            uboy_ui_gdpem_marker = { INDEX = 127 }
+            uboy_ui_gdpem_marker = { INDEX = 128 }
+            uboy_ui_gdpem_marker = { INDEX = 129 }
+            uboy_ui_gdpem_marker = { INDEX = 130 }
+            uboy_ui_gdpem_marker = { INDEX = 131 }
+            uboy_ui_gdpem_marker = { INDEX = 132 }
+            uboy_ui_gdpem_marker = { INDEX = 133 }
+            uboy_ui_gdpem_marker = { INDEX = 134 }
+            uboy_ui_gdpem_marker = { INDEX = 135 }
+            uboy_ui_gdpem_marker = { INDEX = 136 }
+            uboy_ui_gdpem_marker = { INDEX = 137 }
+            uboy_ui_gdpem_marker = { INDEX = 138 }
+            uboy_ui_gdpem_marker = { INDEX = 139 }
+            uboy_ui_gdpem_marker = { INDEX = 140 }
+            uboy_ui_gdpem_marker = { INDEX = 141 }
+            uboy_ui_gdpem_marker = { INDEX = 142 }
+            uboy_ui_gdpem_marker = { INDEX = 143 }
+            uboy_ui_gdpem_marker = { INDEX = 144 }
+            uboy_ui_gdpem_marker = { INDEX = 145 }
+            uboy_ui_gdpem_marker = { INDEX = 146 }
+            uboy_ui_gdpem_marker = { INDEX = 147 }
+            uboy_ui_gdpem_marker = { INDEX = 148 }
+            uboy_ui_gdpem_marker = { INDEX = 149 }
+            uboy_ui_gdpem_marker = { INDEX = 150 }
+            uboy_ui_gdpem_marker = { INDEX = 151 }
+            uboy_ui_gdpem_marker = { INDEX = 152 }
+            uboy_ui_gdpem_marker = { INDEX = 153 }
+            uboy_ui_gdpem_marker = { INDEX = 154 }
+            uboy_ui_gdpem_marker = { INDEX = 155 }
+            uboy_ui_gdpem_marker = { INDEX = 156 }
+            uboy_ui_gdpem_marker = { INDEX = 157 }
+            uboy_ui_gdpem_marker = { INDEX = 158 }
+            uboy_ui_gdpem_marker = { INDEX = 159 }
+            uboy_ui_gdpem_marker = { INDEX = 160 }
+            uboy_ui_gdpem_marker = { INDEX = 161 }
+            uboy_ui_gdpem_marker = { INDEX = 162 }
+            uboy_ui_gdpem_marker = { INDEX = 163 }
+            uboy_ui_gdpem_marker = { INDEX = 164 }
+            uboy_ui_gdpem_marker = { INDEX = 165 }
+            uboy_ui_gdpem_marker = { INDEX = 166 }
+            uboy_ui_gdpem_marker = { INDEX = 167 }
+            uboy_ui_gdpem_marker = { INDEX = 168 }
+            uboy_ui_gdpem_marker = { INDEX = 169 }
+            uboy_ui_gdpem_marker = { INDEX = 170 }
+            uboy_ui_gdpem_marker = { INDEX = 171 }
+            uboy_ui_gdpem_marker = { INDEX = 172 }
+            uboy_ui_gdpem_marker = { INDEX = 173 }
+            uboy_ui_gdpem_marker = { INDEX = 174 }
+            uboy_ui_gdpem_marker = { INDEX = 175 }
+            uboy_ui_gdpem_marker = { INDEX = 176 }
+            uboy_ui_gdpem_marker = { INDEX = 177 }
+            uboy_ui_gdpem_marker = { INDEX = 178 }
+            uboy_ui_gdpem_marker = { INDEX = 179 }
+            uboy_ui_gdpem_marker = { INDEX = 180 }
+            uboy_ui_gdpem_marker = { INDEX = 181 }
+            uboy_ui_gdpem_marker = { INDEX = 182 }
+            uboy_ui_gdpem_marker = { INDEX = 183 }
+            uboy_ui_gdpem_marker = { INDEX = 184 }
+            uboy_ui_gdpem_marker = { INDEX = 185 }
+            uboy_ui_gdpem_marker = { INDEX = 186 }
+            uboy_ui_gdpem_marker = { INDEX = 187 }
+            uboy_ui_gdpem_marker = { INDEX = 188 }
+            uboy_ui_gdpem_marker = { INDEX = 189 }
+            uboy_ui_gdpem_marker = { INDEX = 190 }
+            uboy_ui_gdpem_marker = { INDEX = 191 }
+            uboy_ui_gdpem_marker = { INDEX = 192 }
+            uboy_ui_gdpem_marker = { INDEX = 193 }
+            uboy_ui_gdpem_marker = { INDEX = 194 }
+            uboy_ui_gdpem_marker = { INDEX = 195 }
+            uboy_ui_gdpem_marker = { INDEX = 196 }
+            uboy_ui_gdpem_marker = { INDEX = 197 }
+            uboy_ui_gdpem_marker = { INDEX = 198 }
+            uboy_ui_gdpem_marker = { INDEX = 199 }
+            uboy_ui_gdpem_marker = { INDEX = 200 }
+            uboy_ui_gdpem_marker = { INDEX = 201 }
+            uboy_ui_gdpem_marker = { INDEX = 202 }
+            uboy_ui_gdpem_marker = { INDEX = 203 }
+            uboy_ui_gdpem_marker = { INDEX = 204 }
+            uboy_ui_gdpem_marker = { INDEX = 205 }
+            uboy_ui_gdpem_marker = { INDEX = 206 }
+            uboy_ui_gdpem_marker = { INDEX = 207 }
+            uboy_ui_gdpem_marker = { INDEX = 208 }
+            uboy_ui_gdpem_marker = { INDEX = 209 }
+            uboy_ui_gdpem_marker = { INDEX = 210 }
+            uboy_ui_gdpem_marker = { INDEX = 211 }
+            uboy_ui_gdpem_marker = { INDEX = 212 }
+            uboy_ui_gdpem_marker = { INDEX = 213 }
+            uboy_ui_gdpem_marker = { INDEX = 214 }
+            uboy_ui_gdpem_marker = { INDEX = 215 }
+            uboy_ui_gdpem_marker = { INDEX = 216 }
+            uboy_ui_gdpem_marker = { INDEX = 217 }
+            uboy_ui_gdpem_marker = { INDEX = 218 }
+            uboy_ui_gdpem_marker = { INDEX = 219 }
+            uboy_ui_gdpem_marker = { INDEX = 220 }
+            uboy_ui_gdpem_marker = { INDEX = 221 }
+            uboy_ui_gdpem_marker = { INDEX = 222 }
+            uboy_ui_gdpem_marker = { INDEX = 223 }
+            uboy_ui_gdpem_marker = { INDEX = 224 }
+            uboy_ui_gdpem_marker = { INDEX = 225 }
+            uboy_ui_gdpem_marker = { INDEX = 226 }
+            uboy_ui_gdpem_marker = { INDEX = 227 }
+            uboy_ui_gdpem_marker = { INDEX = 228 }
+            uboy_ui_gdpem_marker = { INDEX = 229 }
+            uboy_ui_gdpem_marker = { INDEX = 230 }
+            uboy_ui_gdpem_marker = { INDEX = 231 }
+            uboy_ui_gdpem_marker = { INDEX = 232 }
+            uboy_ui_gdpem_marker = { INDEX = 233 }
+            uboy_ui_gdpem_marker = { INDEX = 234 }
+            uboy_ui_gdpem_marker = { INDEX = 235 }
+            uboy_ui_gdpem_marker = { INDEX = 236 }
+            uboy_ui_gdpem_marker = { INDEX = 237 }
+            uboy_ui_gdpem_marker = { INDEX = 238 }
+            uboy_ui_gdpem_marker = { INDEX = 239 }
+            uboy_ui_gdpem_marker = { INDEX = 240 }
+            uboy_ui_gdpem_marker = { INDEX = 241 }
+            uboy_ui_gdpem_marker = { INDEX = 242 }
+            uboy_ui_gdpem_marker = { INDEX = 243 }
+            uboy_ui_gdpem_marker = { INDEX = 244 }
+            uboy_ui_gdpem_marker = { INDEX = 245 }
+            uboy_ui_gdpem_marker = { INDEX = 246 }
+            uboy_ui_gdpem_marker = { INDEX = 247 }
+            uboy_ui_gdpem_marker = { INDEX = 248 }
+            uboy_ui_gdpem_marker = { INDEX = 249 }
+            uboy_ui_gdpem_marker = { INDEX = 250 }
+            uboy_ui_gdpem_marker = { INDEX = 251 }
+            uboy_ui_gdpem_marker = { INDEX = 252 }
+            uboy_ui_gdpem_marker = { INDEX = 253 }
+            uboy_ui_gdpem_marker = { INDEX = 254 }
+            uboy_ui_gdpem_marker = { INDEX = 255 }
+            uboy_ui_gdpem_marker = { INDEX = 256 }
+            uboy_ui_gdpem_marker = { INDEX = 257 }
+            uboy_ui_gdpem_marker = { INDEX = 258 }
+            uboy_ui_gdpem_marker = { INDEX = 259 }
+            uboy_ui_gdpem_marker = { INDEX = 260 }
+            uboy_ui_gdpem_marker = { INDEX = 261 }
+            uboy_ui_gdpem_marker = { INDEX = 262 }
+            uboy_ui_gdpem_marker = { INDEX = 263 }
+            uboy_ui_gdpem_marker = { INDEX = 264 }
+            uboy_ui_gdpem_marker = { INDEX = 265 }
+            uboy_ui_gdpem_marker = { INDEX = 266 }
+            uboy_ui_gdpem_marker = { INDEX = 267 }
+            uboy_ui_gdpem_marker = { INDEX = 268 }
+            uboy_ui_gdpem_marker = { INDEX = 269 }
+            uboy_ui_gdpem_marker = { INDEX = 270 }
+            uboy_ui_gdpem_marker = { INDEX = 271 }
+            uboy_ui_gdpem_marker = { INDEX = 272 }
+            uboy_ui_gdpem_marker = { INDEX = 273 }
+            uboy_ui_gdpem_marker = { INDEX = 274 }
+            uboy_ui_gdpem_marker = { INDEX = 275 }
+            uboy_ui_gdpem_marker = { INDEX = 276 }
+            uboy_ui_gdpem_marker = { INDEX = 277 }
+            uboy_ui_gdpem_marker = { INDEX = 278 }
+            uboy_ui_gdpem_marker = { INDEX = 279 }
+            uboy_ui_gdpem_marker = { INDEX = 280 }
+            uboy_ui_gdpem_marker = { INDEX = 281 }
+            uboy_ui_gdpem_marker = { INDEX = 282 }
+            uboy_ui_gdpem_marker = { INDEX = 283 }
+            uboy_ui_gdpem_marker = { INDEX = 284 }
+            uboy_ui_gdpem_marker = { INDEX = 285 }
+            uboy_ui_gdpem_marker = { INDEX = 286 }
+            uboy_ui_gdpem_marker = { INDEX = 287 }
+            uboy_ui_gdpem_marker = { INDEX = 288 }
+            uboy_ui_gdpem_marker = { INDEX = 289 }
+            uboy_ui_gdpem_marker = { INDEX = 290 }
+            uboy_ui_gdpem_marker = { INDEX = 291 }
+            uboy_ui_gdpem_marker = { INDEX = 292 }
+            uboy_ui_gdpem_marker = { INDEX = 293 }
+            uboy_ui_gdpem_marker = { INDEX = 294 }
+            uboy_ui_gdpem_marker = { INDEX = 295 }
+            uboy_ui_gdpem_marker = { INDEX = 296 }
+            uboy_ui_gdpem_marker = { INDEX = 297 }
+            uboy_ui_gdpem_marker = { INDEX = 298 }
+            uboy_ui_gdpem_marker = { INDEX = 299 }
+            uboy_ui_gdpem_marker = { INDEX = 300 }
+            uboy_ui_gdpem_marker = { INDEX = 301 }
+            uboy_ui_gdpem_marker = { INDEX = 302 }
+            uboy_ui_gdpem_marker = { INDEX = 303 }
+            uboy_ui_gdpem_marker = { INDEX = 304 }
+            uboy_ui_gdpem_marker = { INDEX = 305 }
+            uboy_ui_gdpem_marker = { INDEX = 306 }
+            uboy_ui_gdpem_marker = { INDEX = 307 }
+            uboy_ui_gdpem_marker = { INDEX = 308 }
+            uboy_ui_gdpem_marker = { INDEX = 309 }
+            uboy_ui_gdpem_marker = { INDEX = 310 }
+            uboy_ui_gdpem_marker = { INDEX = 311 }
+            uboy_ui_gdpem_marker = { INDEX = 312 }
+            uboy_ui_gdpem_marker = { INDEX = 313 }
+            uboy_ui_gdpem_marker = { INDEX = 314 }
+            uboy_ui_gdpem_marker = { INDEX = 315 }
+            uboy_ui_gdpem_marker = { INDEX = 316 }
+            uboy_ui_gdpem_marker = { INDEX = 317 }
+            uboy_ui_gdpem_marker = { INDEX = 318 }
+            uboy_ui_gdpem_marker = { INDEX = 319 }
+            uboy_ui_gdpem_marker = { INDEX = 320 }
+            uboy_ui_gdpem_marker = { INDEX = 321 }
+            uboy_ui_gdpem_marker = { INDEX = 322 }
+            uboy_ui_gdpem_marker = { INDEX = 323 }
+            uboy_ui_gdpem_marker = { INDEX = 324 }
+            uboy_ui_gdpem_marker = { INDEX = 325 }
+            uboy_ui_gdpem_marker = { INDEX = 326 }
+            uboy_ui_gdpem_marker = { INDEX = 327 }
+            uboy_ui_gdpem_marker = { INDEX = 328 }
+            uboy_ui_gdpem_marker = { INDEX = 329 }
+            uboy_ui_gdpem_marker = { INDEX = 330 }
+            uboy_ui_gdpem_marker = { INDEX = 331 }
+            uboy_ui_gdpem_marker = { INDEX = 332 }
+            uboy_ui_gdpem_marker = { INDEX = 333 }
+            uboy_ui_gdpem_marker = { INDEX = 334 }
+            uboy_ui_gdpem_marker = { INDEX = 335 }
+            uboy_ui_gdpem_marker = { INDEX = 336 }
+            uboy_ui_gdpem_marker = { INDEX = 337 }
+            uboy_ui_gdpem_marker = { INDEX = 338 }
+            uboy_ui_gdpem_marker = { INDEX = 339 }
+            uboy_ui_gdpem_marker = { INDEX = 340 }
+            uboy_ui_gdpem_marker = { INDEX = 341 }
+            uboy_ui_gdpem_marker = { INDEX = 342 }
+            uboy_ui_gdpem_marker = { INDEX = 343 }
+            uboy_ui_gdpem_marker = { INDEX = 344 }
+            uboy_ui_gdpem_marker = { INDEX = 345 }
+            uboy_ui_gdpem_marker = { INDEX = 346 }
+            uboy_ui_gdpem_marker = { INDEX = 347 }
+            uboy_ui_gdpem_marker = { INDEX = 348 }
+            uboy_ui_gdpem_marker = { INDEX = 349 }
+            uboy_ui_gdpem_marker = { INDEX = 350 }
+            uboy_ui_gdpem_marker = { INDEX = 351 }
+            uboy_ui_gdpem_marker = { INDEX = 352 }
+            uboy_ui_gdpem_marker = { INDEX = 353 }
+            uboy_ui_gdpem_marker = { INDEX = 354 }
+            uboy_ui_gdpem_marker = { INDEX = 355 }
+            uboy_ui_gdpem_marker = { INDEX = 356 }
+            uboy_ui_gdpem_marker = { INDEX = 357 }
+            uboy_ui_gdpem_marker = { INDEX = 358 }
+            uboy_ui_gdpem_marker = { INDEX = 359 }
+            uboy_ui_gdpem_marker = { INDEX = 360 }
+            uboy_ui_gdpem_marker = { INDEX = 361 }
+            uboy_ui_gdpem_marker = { INDEX = 362 }
+            uboy_ui_gdpem_marker = { INDEX = 363 }
+            uboy_ui_gdpem_marker = { INDEX = 364 }
+            uboy_ui_gdpem_marker = { INDEX = 365 }
+            uboy_ui_gdpem_marker = { INDEX = 366 }
+            uboy_ui_gdpem_marker = { INDEX = 367 }
+            uboy_ui_gdpem_marker = { INDEX = 368 }
+            uboy_ui_gdpem_marker = { INDEX = 369 }
+            uboy_ui_gdpem_marker = { INDEX = 370 }
+            uboy_ui_gdpem_marker = { INDEX = 371 }
+            uboy_ui_gdpem_marker = { INDEX = 372 }
+            uboy_ui_gdpem_marker = { INDEX = 373 }
+            uboy_ui_gdpem_marker = { INDEX = 374 }
+            uboy_ui_gdpem_marker = { INDEX = 375 }
+            uboy_ui_gdpem_marker = { INDEX = 376 }
+            uboy_ui_gdpem_marker = { INDEX = 377 }
+            uboy_ui_gdpem_marker = { INDEX = 378 }
+            uboy_ui_gdpem_marker = { INDEX = 379 }
+            uboy_ui_gdpem_marker = { INDEX = 380 }
+            uboy_ui_gdpem_marker = { INDEX = 381 }
+            uboy_ui_gdpem_marker = { INDEX = 382 }
+            uboy_ui_gdpem_marker = { INDEX = 383 }
+            uboy_ui_gdpem_marker = { INDEX = 384 }
+            uboy_ui_gdpem_marker = { INDEX = 385 }
+            uboy_ui_gdpem_marker = { INDEX = 386 }
+            uboy_ui_gdpem_marker = { INDEX = 387 }
+            uboy_ui_gdpem_marker = { INDEX = 388 }
+            uboy_ui_gdpem_marker = { INDEX = 389 }
+            uboy_ui_gdpem_marker = { INDEX = 390 }
+            uboy_ui_gdpem_marker = { INDEX = 391 }
+            uboy_ui_gdpem_marker = { INDEX = 392 }
+            uboy_ui_gdpem_marker = { INDEX = 393 }
+            uboy_ui_gdpem_marker = { INDEX = 394 }
+            uboy_ui_gdpem_marker = { INDEX = 395 }
+            uboy_ui_gdpem_marker = { INDEX = 396 }
+            uboy_ui_gdpem_marker = { INDEX = 397 }
+            uboy_ui_gdpem_marker = { INDEX = 398 }
+            uboy_ui_gdpem_marker = { INDEX = 399 }
+        }
+    }
+    
+    # 개별 마커
+    type uboy_ui_gdpem_marker = icon {
+        datacontext = "[GetPlayer]"
+        
+        # 이벤트가 있을 때만 표시
+        visible = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.Var('uboy_ui_gdpem_event_quarter_$INDEX$').GetValue, '(CFixedPoint)0')]"
+        
+        size = { 28 28 }
+        
+        # X 위치 계산 (간단하게)
+        position = { [Multiply_int32($INDEX$, 2)] 0 }
+        parentanchor = left|bottom
+        
+        # 이벤트 타입별 아이콘 (단순화)
+        texture = "gfx/interface/icons/generic_icons/war.dds"
+        
+        # 툴팁
+        tooltip = "uboy_ui_gdpem_marker_tooltip"
+    }
+    
+    # 범례
+    type uboy_ui_gdpem_legend = flowcontainer {
+        direction = vertical
+        spacing = 10
+        margin = { 10 10 }
+        
+        textbox = {
+            text = "uboy_ui_gdpem_legend_title"
+            autoresize = yes
+            align = left|nobaseline
+            default_format = "#bold"
+            using = fontsize_medium
+        }
+        
+        flowcontainer = {
+            direction = horizontal
+            spacing = 20
+            
+            uboy_ui_gdpem_legend_item = { TYPE = 1 }
+            uboy_ui_gdpem_legend_item = { TYPE = 2 }
+            uboy_ui_gdpem_legend_item = { TYPE = 3 }
+        }
+        
+        flowcontainer = {
+            direction = horizontal
+            spacing = 20
+            
+            uboy_ui_gdpem_legend_item = { TYPE = 4 }
+            uboy_ui_gdpem_legend_item = { TYPE = 5 }
+        }
+    }
+    
+    # 범례 항목
+    type uboy_ui_gdpem_legend_item = flowcontainer {
+        direction = horizontal
+        spacing = 5
+        
+        icon = {
+            size = { 24 24 }
+            texture = "uboy_ui_gdpem_icon_path_$TYPE$"
+        }
+        
+        textbox = {
+            autoresize = yes
+            align = left|nobaseline
+            text = "uboy_ui_gdpem_event_type_$TYPE$"
+            using = fontsize_small
+        }
+    }
+}
+
+window = {
+    name = "uboy_ui_gdpem_window"
+    datacontext = "[GetPlayer]"
+    
+    # Window가 열려있을 때만 표시
+    visible = "[GetVariableSystem.Exists('uboy_ui_gdpem_window_open')]"
+    
+    # Movable 속성
+    movable = yes
+    layer = windows
+    
+    # 크기 및 위치
+    size = { 700 600 }
+    parentanchor = center
+    
+    # 애니메이션
+    using = Animation_ShowHide_Standard
+    
+    # 배경
+    using = Window_Background
+    using = Window_Decoration_Spike
+    
+    # 메인 컨테이너
+    vbox = {
+        using = Window_Margins
+        
+        # 헤더
+        header_pattern = {
+            layoutpolicy_horizontal = expanding
+            
+            blockoverride "header_text" {
+                text = "uboy_ui_gdpem_window_title"
+            }
+            
+            blockoverride "button_close" {
+                onclick = "[GetVariableSystem.Clear('uboy_ui_gdpem_window_open')]"
+            }
+        }
+        
+        # 컨텐츠 영역
+        vbox = {
+            layoutpolicy_horizontal = expanding
+            layoutpolicy_vertical = expanding
+            margin = { 20 10 }
+            spacing = 10
+            
+            # 국가 정보 헤더
+            flowcontainer = {
+                parentanchor = hcenter
+                direction = horizontal
+                spacing = 10
+                
+                tiny_flag = {}
+                
+                textbox = {
+                    text = "[GetPlayer.GetName]"
+                    autoresize = yes
+                    align = left|nobaseline
+                    default_format = "#title"
+                    using = fontsize_xl
+                }
+            }
+            
+            divider_clean = {}
+            
+            # 그래프 영역 (스크롤 가능)
+            scrollarea = {
+                layoutpolicy_horizontal = expanding
+                layoutpolicy_vertical = expanding
+                
+                scrollbarpolicy_horizontal = always_off
+                
+                scrollbar_vertical = {
+                    using = vertical_scrollbar
+                }
+                
+                scrollwidget = {
+                    uboy_ui_gdpem_graph_content = {}
+                }
+            }
+        }
+    }
+}
