@@ -1064,37 +1064,61 @@ types country_panel_types
 
 
         ### UBOY.UI-GDP EVENT MARKER
-        flowcontainer ={
-            ### GDP EVENT HISTORY BUTTON (uboy_ui_gdpem)
-            widget = {
-                size = { @panel_width_plus_14 60 }
+        # 구분선
+        widget = {
+            size = { @panel_width_plus_14 10 }
+            parentanchor = hcenter
+            
+            divider_clean = {
+                parentanchor = top|hcenter
+            }
+        }
+        
+        # 펼치기/접기 버튼
+        widget = {
+            size = { @panel_width_plus_14 50 }
+            parentanchor = hcenter
+            
+            button = {
+                parentanchor = hcenter
+                size = { @panel_width_minus_10 45 }
                 
-                button = {
-                    parentanchor = hcenter
-                    size = { @panel_width_minus_10 45 }
+                using = default_button
+                
+                onclick = "[GetVariableSystem.Toggle('uboy_ui_gdpem_expanded')]"
+                tooltip = "uboy_ui_gdpem_button_tooltip"
+                
+                hbox = {
+                    spacing = 10
+                    margin = { 10 0 }
                     
-                    using = default_button
+                    icon = {
+                        size = { 30 30 }
+                        texture = "gfx/interface/icons/generic_icons/chart.dds"
+                    }
                     
-                    onclick = "[GetVariableSystem.Set('uboy_ui_gdpem_target_country', Country.Self)]"
-                    onclick = "[GetVariableSystem.Set('uboy_ui_gdpem_window_open', '(bool)yes')]"
-                    
-                    tooltip = "uboy_ui_gdpem_button_tooltip"
-                    
-                    hbox = {
-                        spacing = 10
-                        margin = { 10 0 }
-                        
-                        textbox = {
-                            layoutpolicy_horizontal = expanding
-                            text = "uboy_ui_gdpem_button_text"
-                            align = left|nobaseline
-                            elide = right
-                            default_format = "#clickable"
-                        }
+                    textbox = {
+                        layoutpolicy_horizontal = expanding
+                        text = "uboy_ui_gdpem_button_text"
+                        align = left|nobaseline
+                        elide = right
+                        default_format = "#clickable"
                     }
                 }
             }
         }
+        
+        # 그래프 영역 - 스크롤 제거, flowcontainer로 직접 배치
+        flowcontainer = {
+            visible = "[GetVariableSystem.Exists('uboy_ui_gdpem_expanded')]"
+            direction = vertical
+            parentanchor = hcenter
+            spacing = 0
+            
+            # 기존 type 호출
+            uboy_ui_gdpem_graph_content = {}
+        }
+        
         ### UBOY.UI-GDP EVENT MARKER END
 
 

@@ -8,11 +8,15 @@ types uboy_ui_gdpem_window_types
         direction = vertical
         parentanchor = hcenter
         spacing = 15
-        margin = { 10 10 }
+        margin_top = 10
+        margin_bottom = 10
+        margin_left = 10
+        margin_right = 10
         
         # 그래프 컨테이너
         widget = {
-            size = { 640 350 }
+            size = { 540 350 }
+            parentanchor = hcenter
             
             # 배경
             background = {
@@ -25,7 +29,10 @@ types uboy_ui_gdpem_window_types
                 spriteType = Corneredtiled
                 spriteborder = { 2 2 }
                 texture_density = 2
-                margin = { 10 10 }
+                margin_top = 10
+                margin_bottom = 10
+                margin_left = 10
+                margin_right = 10
                 alpha = 0.85
                 
                 modify_texture = {
@@ -40,7 +47,10 @@ types uboy_ui_gdpem_window_types
             # GDP 라인 그래프
             widget = {
                 size = { 100% 100% }
-                margin = { 15 15 }
+                margin_top = 15
+                margin_bottom = 15
+                margin_left = 15
+                margin_right = 15
                 
                 plotline = {
                     visible = "[Not(IsEmpty(GetPlayer.GetGDPTrend))]"
@@ -67,7 +77,10 @@ types uboy_ui_gdpem_window_types
             # Y축
             axis = {
                 size = { 100% 100% }
-                margin = { 15 15 }
+                margin_top = 15
+                margin_bottom = 15
+                margin_left = 15
+                margin_right = 15
                 direction = vertical
                 
                 axis_label = {
@@ -102,18 +115,21 @@ types uboy_ui_gdpem_window_types
             # X축
             axis = {
                 size = { 100% 100% }
-                margin = { 15 15 }
+                margin_top = 20
+                margin_bottom = 20
+                margin_left = 30
+                margin_right = 30
                 direction = horizontal
                 
                 axis_label = {
                     textbox = {
                         visible = "[Not(IsEmpty(GetPlayer.GetGDPTrend))]"
                         autoresize = yes
-                        widgetanchor = hcenter|bottom
+                        widgetanchor = left|bottom
                         parentanchor = bottom|left
-                        margin_left = 5
-                        margin_top = 8
-                        align = center|nobaseline
+                        margin_left = -5
+                        margin_top = 5
+                        align = left|nobaseline
                         using = fontsize_small
                         text = "[GetOldestDate(GetPlayer.GetGDPTrend)]"
                     }
@@ -123,11 +139,11 @@ types uboy_ui_gdpem_window_types
                     textbox = {
                         visible = "[Not(IsEmpty(GetPlayer.GetGDPTrend))]"
                         autoresize = yes
-                        widgetanchor = hcenter|bottom
+                        widgetanchor = right|bottom
                         parentanchor = bottom|right
-                        margin_right = 5
-                        margin_top = 8
-                        align = center|nobaseline
+                        margin_right = -5
+                        margin_top = 5
+                        align = right|nobaseline
                         using = fontsize_small
                         text = "[GetLatestDate(GetPlayer.GetGDPTrend)]"
                     }
@@ -136,17 +152,135 @@ types uboy_ui_gdpem_window_types
         }
         
         # 범례
-        uboy_ui_gdpem_legend = {}
+        flowcontainer = {
+            direction = vertical
+            spacing = 10
+            parentanchor = hcenter
+            
+            textbox = {
+                text = "uboy_ui_gdpem_legend_title"
+                autoresize = yes
+                align = center|nobaseline
+                default_format = "#bold"
+                using = fontsize_medium
+            }
+            
+            flowcontainer = {
+                direction = horizontal
+                spacing = 20
+                parentanchor = hcenter
+                
+                # 전쟁 시작
+                flowcontainer = {
+                    direction = horizontal
+                    spacing = 5
+                    
+                    icon = {
+                        size = { 24 24 }
+                        texture = "gfx/interface/main_hud/mil_btn.dds"
+                    }
+                    
+                    textbox = {
+                        autoresize = yes
+                        align = left|nobaseline
+                        text = "uboy_ui_gdpem_event_type_1"
+                        using = fontsize_small
+                    }
+                }
+                
+                # 전쟁 종료
+                flowcontainer = {
+                    direction = horizontal
+                    spacing = 5
+                    
+                    icon = {
+                        size = { 24 24 }
+                        texture = "gfx/interface/main_hud/mil_btn.dds"
+                    }
+                    
+                    textbox = {
+                        autoresize = yes
+                        align = left|nobaseline
+                        text = "uboy_ui_gdpem_event_type_2"
+                        using = fontsize_small
+                    }
+                }
+                
+                # 기술
+                flowcontainer = {
+                    direction = horizontal
+                    spacing = 5
+                    
+                    icon = {
+                        size = { 24 24 }
+                        texture = "gfx/interface/main_hud/mil_btn.dds"
+                    }
+                    
+                    textbox = {
+                        autoresize = yes
+                        align = left|nobaseline
+                        text = "uboy_ui_gdpem_event_type_3"
+                        using = fontsize_small
+                    }
+                }
+            }
+            
+            flowcontainer = {
+                direction = horizontal
+                spacing = 20
+                parentanchor = hcenter
+                
+                # 영토 획득
+                flowcontainer = {
+                    direction = horizontal
+                    spacing = 5
+                    
+                    icon = {
+                        size = { 24 24 }
+                        texture = "gfx/interface/main_hud/mil_btn.dds"
+                    }
+                    
+                    textbox = {
+                        autoresize = yes
+                        align = left|nobaseline
+                        text = "uboy_ui_gdpem_event_type_4"
+                        using = fontsize_small
+                    }
+                }
+                
+                # 영토 상실
+                flowcontainer = {
+                    direction = horizontal
+                    spacing = 5
+                    
+                    icon = {
+                        size = { 24 24 }
+                        texture = "gfx/interface/main_hud/mil_btn.dds"
+                    }
+                    
+                    textbox = {
+                        autoresize = yes
+                        align = left|nobaseline
+                        text = "uboy_ui_gdpem_event_type_5"
+                        using = fontsize_small
+                    }
+                }
+            }
+        }
         
         # 설명 텍스트
         textbox = {
             text = "uboy_ui_gdpem_description"
-            size = { 640 -1 }
+            size = { 520 -1 }
             autoresize = yes
             multiline = yes
-            align = left|nobaseline
-            margin = { 10 10 }
+            align = center|nobaseline
+            margin_top = 10
+            margin_bottom = 10
+            margin_left = 10
+            margin_right = 10
             using = fontsize_small
+            parentanchor = hcenter
         }
     }
     
@@ -3900,86 +4034,86 @@ types uboy_ui_gdpem_window_types
     }
 }
 
-window = {
-    name = "uboy_ui_gdpem_window"
-    datacontext = "[GetPlayer]"
-    
-    # Window가 열려있을 때만 표시
-    visible = "[GetVariableSystem.Exists('uboy_ui_gdpem_window_open')]"
-    
-    # Movable 속성
-    movable = yes
-    layer = windows
-    
-    # 크기 및 위치
-    size = { 700 600 }
-    parentanchor = center
-    
-    # 애니메이션
-    using = Animation_ShowHide_Standard
-    
-    # 배경
-    using = Window_Background
-    using = Window_Decoration_Spike
-    
-    # 메인 컨테이너
-    vbox = {
-        using = Window_Margins
-        
-        # 헤더
-        header_pattern = {
-            layoutpolicy_horizontal = expanding
-            
-            blockoverride "header_text" {
-                text = "uboy_ui_gdpem_window_title"
-            }
-            
-            blockoverride "button_close" {
-                onclick = "[GetVariableSystem.Clear('uboy_ui_gdpem_window_open')]"
-            }
-        }
-        
-        # 컨텐츠 영역
-        vbox = {
-            layoutpolicy_horizontal = expanding
-            layoutpolicy_vertical = expanding
-            margin = { 20 10 }
-            spacing = 10
-            
-            # 국가 정보 헤더
-            flowcontainer = {
-                parentanchor = hcenter
-                direction = horizontal
-                spacing = 10
-                
-                tiny_flag = {}
-                
-                textbox = {
-                    text = "[GetPlayer.GetName]"
-                    autoresize = yes
-                    align = left|nobaseline
-                    default_format = "#title"
-                    using = fontsize_xl
-                }
-            }
-            
-            divider_clean = {}
-            
-            # 그래프 영역 (스크롤 가능)
-            scrollarea = {
-                layoutpolicy_horizontal = expanding
-                layoutpolicy_vertical = expanding
-                
-                scrollbarpolicy_horizontal = always_off
-                
-                scrollbar_vertical = {
-                    using = vertical_scrollbar
-                }
-                
-                scrollwidget = {
-                    uboy_ui_gdpem_graph_content = {}
-                }
-            }
-        }
-    }
-}
+#window = {
+#    name = "uboy_ui_gdpem_window"
+#    datacontext = "[GetPlayer]"
+#    
+#    # Window가 열려있을 때만 표시
+#    visible = "[GetVariableSystem.Exists('uboy_ui_gdpem_window_open')]"
+#    
+#    # Movable 속성
+#    movable = yes
+#    layer = windows
+#    
+#    # 크기 및 위치
+#    size = { 700 600 }
+#    parentanchor = center
+#    
+#    # 애니메이션
+#    using = Animation_ShowHide_Standard
+#    
+#    # 배경
+#    using = Window_Background
+#    using = Window_Decoration_Spike
+#    
+#    # 메인 컨테이너
+#    vbox = {
+#        using = Window_Margins
+#        
+#        # 헤더
+#        header_pattern = {
+#            layoutpolicy_horizontal = expanding
+#            
+#            blockoverride "header_text" {
+#                text = "uboy_ui_gdpem_window_title"
+#            }
+#            
+#            blockoverride "button_close" {
+#                onclick = "[GetVariableSystem.Clear('uboy_ui_gdpem_window_open')]"
+#            }
+#        }
+#        
+#        # 컨텐츠 영역
+#        vbox = {
+#            layoutpolicy_horizontal = expanding
+#            layoutpolicy_vertical = expanding
+#            margin = { 20 10 }
+#            spacing = 10
+#            
+#            # 국가 정보 헤더
+#            flowcontainer = {
+#                parentanchor = hcenter
+#                direction = horizontal
+#                spacing = 10
+#                
+#                tiny_flag = {}
+#                
+#                textbox = {
+#                    text = "[GetPlayer.GetName]"
+#                    autoresize = yes
+#                    align = left|nobaseline
+#                    default_format = "#title"
+#                    using = fontsize_xl
+#                }
+#            }
+#            
+#            divider_clean = {}
+#            
+#            # 그래프 영역 (스크롤 가능)
+#            scrollarea = {
+#                layoutpolicy_horizontal = expanding
+#                layoutpolicy_vertical = expanding
+#                
+#                scrollbarpolicy_horizontal = always_off
+#                
+#                scrollbar_vertical = {
+#                    using = vertical_scrollbar
+#                }
+#                
+#                scrollwidget = {
+#                    uboy_ui_gdpem_graph_content = {}
+#                }
+#            }
+#        }
+#    }
+#}
