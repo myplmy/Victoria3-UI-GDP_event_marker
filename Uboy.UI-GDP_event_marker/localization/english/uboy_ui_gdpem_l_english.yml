@@ -1,26 +1,25 @@
 ﻿l_english:
-    # 윈도우
     uboy_ui_gdpem_window_title: "GDP Event History"
     uboy_ui_gdpem_button_text: "View GDP Event History"
     uboy_ui_gdpem_button_tooltip: "Open a detailed view of economic and political events over time"
     
-    # 그래프
+  
     uboy_ui_gdpem_legend_title: "Event Legend:"
     uboy_ui_gdpem_description: "This graph shows major economic and political events that occurred during this nation's history. Each marker represents the first significant event in that quarter."
     
-    # 이벤트 타입
+
     uboy_ui_gdpem_event_type_1: "War/Diplomatic Play Started"
     uboy_ui_gdpem_event_type_2: "War/Diplomatic Play Ended"
     uboy_ui_gdpem_event_type_3: "Technology Researched"
     uboy_ui_gdpem_event_type_4: "Territory Gained"
     uboy_ui_gdpem_event_type_5: "Territory Lost"
     
-    # 아이콘 경로
-    uboy_ui_gdpem_icon_path_1: "gfx/interface/icons/generic_icons/war.dds"
-    uboy_ui_gdpem_icon_path_2: "gfx/interface/icons/generic_icons/peace.dds"
-    uboy_ui_gdpem_icon_path_3: "gfx/interface/icons/generic_icons/technology.dds"
-    uboy_ui_gdpem_icon_path_4: "gfx/interface/icons/generic_icons/plus.dds"
-    uboy_ui_gdpem_icon_path_5: "gfx/interface/icons/generic_icons/minus.dds"
+
+    uboy_ui_gdpem_icon_path_1: "gfx/interface/icons/ig_icons/armed_forces_30.dds"
+    uboy_ui_gdpem_icon_path_2: "gfx/interface/icons/ig_icons/armed_forces_30.dds"
+    uboy_ui_gdpem_icon_path_3: "gfx/interface/icons/ig_icons/armed_forces_30.dds"
+    uboy_ui_gdpem_icon_path_4: "gfx/interface/icons/ig_icons/armed_forces_30.dds"
+    uboy_ui_gdpem_icon_path_5: "gfx/interface/icons/ig_icons/armed_forces_30.dds"
     
-    # 마커 툴팁
+
     uboy_ui_gdpem_marker_tooltip: "#header Historical Event#!\n\nCheck this marker to see what happened during this period."

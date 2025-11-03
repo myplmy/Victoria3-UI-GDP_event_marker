@@ -1,0 +1,56 @@
+# GDP Event Marker - Open Button
+# Adds a button to GDP panel to open the event marker window
+
+types event_marker_button_types
+{
+    # ==================== 버튼 타입 ====================
+    type event_marker_open_button = button_icon_round_action {
+        size = { 50 50 }
+        
+        tooltip = "EVENT_MARKER_OPEN_TOOLTIP"
+        
+        onclick = "[GetVariableSystem.Toggle('event_marker_window_open')]"
+        
+        blockoverride "icon" {
+            texture = "gfx/interface/icons/ig_icons/armed_forces_30.dds"
+        }
+        
+        blockoverride "icon_size" {
+            size = { 70% 70% }
+        }
+    }
+}
+
+# ==================== GDP 패널 오버레이 ====================
+# GDP 정보가 표시되는 곳에 버튼 추가
+
+widget = {
+    name = "event_marker_button_overlay"
+    layer = windows
+    size = { 100% 100% }
+    
+    # 플레이어 국가가 유효할 때만 표시
+    datacontext = "[GetPlayer]"
+    visible = "[GetPlayer.IsValid]"
+    
+    # 우측 하단에 버튼 배치
+    event_marker_open_button = {
+        parentanchor = bottom|right
+        position = { -20 -100 }
+        
+        # 호버 애니메이션
+        state = {
+            name = _mouse_hierarchy_enter
+            alpha = 1.0
+            
+            #on_start = "[PdxGuiWidget.FindChild('button_icon').TriggerAnimation('button_icon_mouse_enter')]"
+        }
+        
+        state = {
+            name = _mouse_hierarchy_leave
+            alpha = 0.8
+            
+            #on_start = "[PdxGuiWidget.FindChild('button_icon').TriggerAnimation('button_icon_mouse_leave')]"
+        }
+    }
+}

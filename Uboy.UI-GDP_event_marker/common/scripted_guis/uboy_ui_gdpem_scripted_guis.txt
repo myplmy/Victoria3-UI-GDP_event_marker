@@ -1,4 +1,0 @@
-﻿# Window visibility control - 삭제하거나 주석 처리
-
-# scripted_guis는 필요 없습니다. 
-# visible 속성을 GUI에서 직접 처리합니다.

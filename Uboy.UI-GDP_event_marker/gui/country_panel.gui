@@ -1063,6 +1063,56 @@ types country_panel_types
 		}
 
 
+        ### CMF STRUCT TEST SECTION START
+        # 구분선
+        widget = {
+            size = { @panel_width_plus_14 10 }
+            parentanchor = hcenter
+            
+            divider_clean = {
+                parentanchor = top|hcenter
+            }
+        }
+
+        # 버튼
+        widget = {
+            size = { @panel_width_plus_14 50 }
+            parentanchor = hcenter
+            
+            button = {
+                parentanchor = hcenter
+                size = { @panel_width_minus_10 45 }
+                
+                using = default_button
+                
+                onclick = "[GetVariableSystem.Toggle('test_struct_expanded')]"
+                
+                textbox = {
+                    raw_text = "EVENT GRAPH TEST"
+                    parentanchor = center
+                    size = { 100% 100% }
+                    align = center|nobaseline
+                    default_format = "#clickable"
+                    elide = right
+                }
+            }
+        }
+
+        # test_struct_window.gui의 type 사용
+        flowcontainer = {
+            visible = "[GetVariableSystem.Exists('test_struct_expanded')]"
+            parentanchor = hcenter
+            direction = vertical
+            spacing = 0
+            margin_top = 10
+            margin_bottom = 10
+            
+            #test_event_graph_display = {}
+        }
+        ### CMF STRUCT TEST SECTION END
+
+
+
         ### UBOY.UI-GDP EVENT MARKER
         # 구분선
         widget = {
@@ -1086,7 +1136,7 @@ types country_panel_types
                 using = default_button
                 
                 onclick = "[GetVariableSystem.Toggle('uboy_ui_gdpem_expanded')]"
-                tooltip = "uboy_ui_gdpem_button_tooltip"
+                raw_tooltip = "uboy_ui_gdpem_button_tooltip"
                 
                 hbox = {
                     spacing = 10
@@ -1094,12 +1144,12 @@ types country_panel_types
                     
                     icon = {
                         size = { 30 30 }
-                        texture = "gfx/interface/icons/generic_icons/chart.dds"
+                        texture = "gfx/interface/main_hud/budget_btn.dds"
                     }
                     
                     textbox = {
                         layoutpolicy_horizontal = expanding
-                        text = "uboy_ui_gdpem_button_text"
+                        raw_text = "uboy_ui_gdpem_button_text"
                         align = left|nobaseline
                         elide = right
                         default_format = "#clickable"
@@ -1115,8 +1165,15 @@ types country_panel_types
             parentanchor = hcenter
             spacing = 0
             
-            # 기존 type 호출
-            uboy_ui_gdpem_graph_content = {}
+            button_icon_round_action = {
+                size = { 30 30 }
+                parentanchor = right
+                position = { -10 0 }
+                
+                tooltip = "EVENT_MARKER_OPEN_TOOLTIP"
+                onclick = "[GetVariableSystem.Toggle('event_marker_window_open')]"
+                
+            }
         }
         
         ### UBOY.UI-GDP EVENT MARKER END

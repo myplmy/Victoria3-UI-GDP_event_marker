@@ -1,152 +1,117 @@
 ﻿# GDP Event Marker - On Actions
+# 게임 시작 시 초기화 및 월별 이벤트 감지
 
-# ==================================================================================================================== #
-# 게임 시작 시 초기화
-# ==================================================================================================================== #
-
-on_game_started = {
+on_game_start_tutorial_off = {
     on_actions = {
-        uboy_ui_gdpem_on_start
+        event_marker_initialize
     }
 }
 
-uboy_ui_gdpem_on_start = {
+event_marker_initialize = {
     effect = {
-        uboy_ui_gdpem_initialize_all = yes
+        # 게임 시작 년도 저장 (분기 인덱스 계산용)
+        set_global_variable = {
+            name = event_marker_game_start_year
+            value = 1836  # 기본 시작 년도
+        }
         
-        # 각 국가의 초기 state 개수 저장
+        # 모든 국가 초기화
         every_country = {
-            set_variable = {
-                name = uboy_ui_gdpem_last_state_count
-                value = num_states
+            event_marker_initialize_country = yes
+        }
+    }
+}
+
+# 월별 체크 (on_monthly_pulse)
+on_monthly = {
+    on_actions = {
+        event_marker_monthly_check
+    }
+}
+
+event_marker_monthly_check = {
+    effect = {
+        every_country = {
+            limit = {
+                # 플레이어 국가만 또는 주요 국가만 체크 (성능 최적화)
+                OR = {
+                    is_player = yes
+                }
             }
         }
     }
 }
 
-# ==================================================================================================================== #
-# 외교전 / 전쟁 이벤트
-# ==================================================================================================================== #
-
-# 외교전 시작
+# 외교전 시작 감지
 on_diplomatic_play_started = {
     on_actions = {
-        uboy_ui_gdpem_on_war_event_started
+        event_marker_diplomatic_play_started
     }
 }
 
-uboy_ui_gdpem_on_war_event_started = {
+event_marker_diplomatic_play_started = {
     effect = {
-        # 개시자
+        # 외교전 주도자
         scope:initiator = {
-            uboy_ui_gdpem_record_event = { EVENT_TYPE = 1 }
+            event_marker_try_record_event = {
+                EVENT_TYPE = 1  # 외교전 시작
+            }
         }
         
-        # 대상
+        # 외교전 대상
         scope:target = {
-            uboy_ui_gdpem_record_event = { EVENT_TYPE = 1 }
+            event_marker_try_record_event = {
+                EVENT_TYPE = 1  # 외교전 시작 (방어)
+            }
         }
     }
 }
 
-# 외교전 종료
-on_diplomatic_play_ended = {
+# 전쟁 시작 감지
+on_war_started = {
     on_actions = {
-        uboy_ui_gdpem_on_war_event_ended
+        event_marker_war_started
     }
 }
 
-uboy_ui_gdpem_on_war_event_ended = {
+event_marker_war_started = {
     effect = {
-        # 개시자
-        scope:initiator = {
-            uboy_ui_gdpem_record_event = { EVENT_TYPE = 2 }
+        scope:diplomatic_play = {
+            initiator = {
+                save_scope_as = war_initiator
+            }
         }
         
-        # 대상
+        # 공격자
+        scope:war_initiator = {
+            event_marker_try_record_event = {
+                EVENT_TYPE = 2  # 전쟁 시작 (공격)
+            }
+        }
+        
+        # 방어자는 타겟들
         scope:target = {
-            uboy_ui_gdpem_record_event = { EVENT_TYPE = 2 }
+            event_marker_try_record_event = {
+                EVENT_TYPE = 2  # 전쟁 시작 (방어)
+            }
         }
     }
 }
 
-# 전쟁 종료
-on_war_ended = {
-    on_actions = {
-        uboy_ui_gdpem_on_war_event_ended
-    }
-}
-
-# ==================================================================================================================== #
-# 기술 개발
-# ==================================================================================================================== #
-
+# 기술 개발 감지
 on_technology_researched = {
     on_actions = {
-        uboy_ui_gdpem_on_technology
+        event_marker_technology_researched
     }
 }
 
-uboy_ui_gdpem_on_technology = {
+event_marker_technology_researched = {
     effect = {
-        # 모든 기술 개발을 기록 (분기당 첫 번째만)
-        uboy_ui_gdpem_record_event = { EVENT_TYPE = 3 }
-    }
-}
-
-# ==================================================================================================================== #
-# 영토 변화 감지 (월별 체크)
-# ==================================================================================================================== #
-
-on_monthly_pulse = {
-    on_actions = {
-        uboy_ui_gdpem_monthly_territory_check
-    }
-}
-
-uboy_ui_gdpem_monthly_territory_check = {
-    effect = {
-        every_country = {
-            # 초기화 안 된 국가는 현재 state 개수 저장
-            if = {
-                limit = {
-                    NOT = { has_variable = uboy_ui_gdpem_last_state_count }
-                }
-                set_variable = {
-                    name = uboy_ui_gdpem_last_state_count
-                    value = num_states
-                }
+        scope:country = {
+            # 모든 기술 개발을 기록
+            event_marker_try_record_event = {
+                EVENT_TYPE = 5
             }
-            
-            # 영토 획득 체크
-            uboy_ui_gdpem_check_territory_gained = yes
-            
-            # 영토 상실 체크
-            uboy_ui_gdpem_check_territory_lost = yes
         }
     }
 }
-
-# ==================================================================================================================== #
-# 주 거래 (영토 획득/상실)
-# ==================================================================================================================== #
-
-#on_traded_states = {
-#    on_actions = {
-#        uboy_ui_gdpem_on_state_trade
-#    }
-#}
-#
-#uboy_ui_gdpem_on_state_trade = {
-#    effect = {
-#        # 구매자 (영토 획득)
-#        scope:buyer = {
-#            uboy_ui_gdpem_record_event = { EVENT_TYPE = 4 }
-#        }
-#        
-#        # 판매자 (영토 상실)
-#        scope:seller = {
-#            uboy_ui_gdpem_record_event = { EVENT_TYPE = 5 }
-#        }
-#    }
-#}
