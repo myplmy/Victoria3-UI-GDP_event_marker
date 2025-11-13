@@ -7303,7 +7303,7 @@ types gacha_popups {
             visible = "[GetVariableSystem.Exists('event_marker_window_open')]"
         }
         blockoverride "popup_title" {
-            text = gacha_introduction_title
+            raw_text = gacha_introduction_title
         }
         blockoverride "popup_content" {
             vbox = {
@@ -7398,7 +7398,7 @@ types gacha_popups {
                                     #margin_bottom = 10
                                     align = left|nobaseline
                                     using = fontsize_small
-                                    block "minvalue" {
+                                    blockoverride "minvalue" {
                                         raw_text = "0"
                                     }
                                 }
@@ -7435,7 +7435,7 @@ types gacha_popups {
                                     #margin_top = 8
                                     align = center|nobaseline
                                     using = fontsize_small
-                                    block "startdate" {
+                                    blockoverride "startdate" {
                                         text = "[GetOldestDate(GetPlayer.GetGDPTrend)]"
                                     }
                                 }
@@ -7451,7 +7451,7 @@ types gacha_popups {
                                     #margin_top = 8
                                     align = center|nobaseline
                                     using = fontsize_small
-                                    block "enddate" {
+                                    blockoverride "enddate" {
                                         #text = "[GetLatestDate(GetPlayer.GetGDPTrend)]"
                                     }
                                 }
@@ -7468,7 +7468,7 @@ types gacha_popups {
                                     align = center|nobaseline
                                     using = fontsize_small
                                     block "enddate" {
-                                        text = "[GetGameEndDate()]"
+                                        text = "[GetGameEndDate.GetString]"
                                         #text = "[GetLatestDate(GetPlayer.GetGDPTrend)]"
                                     }
                                 }
@@ -7498,7 +7498,7 @@ types gacha_popups {
                                 textbox = {
                                     layoutpolicy_horizontal = expanding
                                     size = { 0 40 }
-                                    text = gacha_introduction_explain_title
+                                    raw_text = gacha_introduction_explain_title
                                     using = fontsize_xxl
                                     align = center
                                     elide = right
@@ -7517,7 +7517,7 @@ types gacha_popups {
                             layoutpolicy_horizontal = expanding
                             multiline = yes
                             autoresize = yes
-                            text = gacha_introduction_explain_body
+                            raw_text = gacha_introduction_explain_body
                         }
                         expand = {}
                     }
