@@ -155,7 +155,7 @@ types event_marker_window_types
                 # Y axis
                 axis = {
                     size = { 100% 100% }
-                    margin = { 20 20 }
+                    #margin = { 20 20 }
                     direction = vertical
                     
                     axis_label = {
@@ -168,7 +168,9 @@ types event_marker_window_types
                             margin_bottom = 10
                             align = left|nobaseline
                             using = fontsize_small
-                            raw_text = "0"
+							block "minvalue" {
+								raw_text = "0"
+							}
                         }
                     }
                     
@@ -190,7 +192,7 @@ types event_marker_window_types
                 # X axis
                 axis = {
                     size = { 100% 100% }
-                    margin = { 20 20 }
+                    #margin = { 20 20 }
                     direction = horizontal
                     
                     axis_label = {
@@ -203,7 +205,9 @@ types event_marker_window_types
                             margin_top = 8
                             align = center|nobaseline
                             using = fontsize_small
-                            text = "[GetOldestDate(GetPlayer.GetGDPTrend)]"
+                            block "startdate" {
+                                text = "[GetOldestDate(GetPlayer.GetGDPTrend)]"
+                            }
                         }
                     }
                     
@@ -217,7 +221,9 @@ types event_marker_window_types
                             margin_top = 8
                             align = center|nobaseline
                             using = fontsize_small
-                            text = "[GetLatestDate(GetPlayer.GetGDPTrend)]"
+							block "enddate" {
+                                text = "[GetLatestDate(GetPlayer.GetGDPTrend)]"
+                            }
                         }
                     }
                 }
@@ -7301,18 +7307,182 @@ types gacha_popups {
         }
         blockoverride "popup_content" {
             vbox = {
-                layoutpolicy_vertical = expanding
-                layoutpolicy_horizontal = expanding
+                #layoutpolicy_vertical = expanding
+                #layoutpolicy_horizontal = expanding
                 parentanchor = hcenter
                 margin = { 50 100 }
                 margin_bottom = 50
-                margin_right = 320
                 spacing = 20
 
+                # ========== GDP 그래프 섹션 ==========
+                vbox = {
+                    #layoutpolicy_horizontal = expanding
+                    #spacing = 10
+                    
+                    # 그래프 컨테이너
+                    widget = {
+                        #layoutpolicy_horizontal = expanding
+                        size = { 500 300 }
+                        
+                        datacontext = "[GetPlayer]"
+                        
+                        # 배경
+                        background = {
+                            using = paper_bg
+                            margin = { 10 10 }
+                        }
+
+                        background = {
+                            texture = "gfx/interface/graph/graph_frame.dds"
+                            spriteType = Corneredtiled
+                            spriteborder = { 2 2 }
+                            texture_density = 2
+                            margin = { 15 15 }
+                            alpha = 0.8
+                        }
+                        
+                        
+                        # GDP 라인
+                        widget = {
+                            size = { 100% 100% }
+                            #margin = { 30 30 }
+                            
+                            plotline = {
+                                visible = "[Not(IsEmpty(GetPlayer.GetGDPTrend))]"
+                                size = { 100% 100% }
+                                using = plot_line
+                                width = 2.5
+                                color = { 0.9 0.9 0.9 1.0 }
+                                plotpoints = "[GetTrendPlotPointsNormalized(GetPlayer.GetGDPTrend, '(CFixedPoint)0', GetMax(GetPlayer.GetGDPTrend))]"
+                            }
+                            
+                            # 데이터 없음 표시
+                            textbox = {
+                                visible = "[IsEmpty(GetPlayer.GetGDPTrend)]"
+                                text = "GRAPH_NOT_INITIALIZED"
+                                parentanchor = center
+                                autoresize = yes
+                                align = center|nobaseline
+                            }
+                            
+                            # 이벤트 마커 레이어
+                            widget = {
+                                size = { 100% 100% }
+                                
+                                # 마커 컨테이너 (하단)
+                                widget = {
+                                    name = "marker_container"
+                                    size = { 100% 40 }
+                                    parentanchor = bottom
+                                    #margin_bottom = 10
+                                    
+                                    # 여기에 PowerShell로 생성한 마커들 붙여넣기
+                                    # gui_markers.txt 내용
+                                }
+                            }
+                        }
+                        
+                        # Y축
+                        axis = {
+                            size = { 100% 100% }
+                            #margin = { 30 30 }
+                            direction = vertical
+                            
+                            axis_label = {
+                                textbox = {
+                                    visible = "[Not(IsEmpty(GetPlayer.GetGDPTrend))]"
+                                    autoresize = yes
+                                    widgetanchor = vcenter|right
+                                    parentanchor = left
+                                    #margin_right = 8
+                                    #margin_bottom = 10
+                                    align = left|nobaseline
+                                    using = fontsize_small
+                                    block "minvalue" {
+                                        raw_text = "0"
+                                    }
+                                }
+                            }
+                            
+                            axis_label = {
+                                textbox = {
+                                    visible = "[Not(IsEmpty(GetPlayer.GetGDPTrend))]"
+                                    autoresize = yes
+                                    widgetanchor = vcenter|right
+                                    parentanchor = left
+                                    #margin_right = 8
+                                    #margin_top = 10
+                                    align = left|nobaseline
+                                    using = fontsize_small
+                                    text = "[GetMax(GetPlayer.GetGDPTrend)|K]"
+                                }
+                            }
+                        }
+                        
+                        # X축
+                        axis = {
+                            size = { 100% 100% }
+                            #margin = { 30 30 }
+                            direction = horizontal
+                            
+                            axis_label = {
+                                textbox = {
+                                    visible = "[Not(IsEmpty(GetPlayer.GetGDPTrend))]"
+                                    autoresize = yes
+                                    widgetanchor = left|bottom
+                                    parentanchor = bottom|left
+                                    #margin_left = 5
+                                    #margin_top = 8
+                                    align = center|nobaseline
+                                    using = fontsize_small
+                                    block "startdate" {
+                                        text = "[GetOldestDate(GetPlayer.GetGDPTrend)]"
+                                    }
+                                }
+                            }
+                            
+                            axis_label = {
+                                textbox = {
+                                    visible = "[Not(IsEmpty(GetPlayer.GetGDPTrend))]"
+                                    autoresize = yes
+                                    widgetanchor = right|bottom
+                                    parentanchor = bottom|hcenter
+                                    #margin_left = 50
+                                    #margin_top = 8
+                                    align = center|nobaseline
+                                    using = fontsize_small
+                                    block "enddate" {
+                                        #text = "[GetLatestDate(GetPlayer.GetGDPTrend)]"
+                                    }
+                                }
+                            }
+
+                            axis_label = {
+                                textbox = {
+                                    visible = "[Not(IsEmpty(GetPlayer.GetGDPTrend))]"
+                                    autoresize = yes
+                                    widgetanchor = right|bottom
+                                    parentanchor = bottom|left
+                                    #margin_left = 50
+                                    #margin_top = 8
+                                    align = center|nobaseline
+                                    using = fontsize_small
+                                    block "enddate" {
+                                        text = "[GetGameEndDate()]"
+                                        #text = "[GetLatestDate(GetPlayer.GetGDPTrend)]"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                # ========== 설명 (원래 있던 내용) ==========
                 vbox = {
                     layoutpolicy_vertical = expanding
                     layoutpolicy_horizontal = expanding
                     using = entry_bg_fancy
+                    margin_top = 20
 
                     default_header_clean = {
                         blockoverride "header_mask" {
@@ -7322,11 +7492,9 @@ types gacha_popups {
                             layoutpolicy_horizontal = growing
                             size = { 0 50 }
                         }
-
                         blockoverride "textbox" {
                             hbox = {
                                 margin = { 20 0 }
-
                                 textbox = {
                                     layoutpolicy_horizontal = expanding
                                     size = { 0 40 }
@@ -7351,14 +7519,13 @@ types gacha_popups {
                             autoresize = yes
                             text = gacha_introduction_explain_body
                         }
-
                         expand = {}
                     }
                 }
             }
         }
         blockoverride "popup_button_onclick" {
-            onclick = "[GetScriptedGui('sgui_gacha_introduction').Execute(GuiScope.SetRoot(Country.MakeScope).End)]"
+            onclick = "[GetVariableSystem.Clear('event_marker_window_open')]"
         }
     }
 
