@@ -4,19 +4,19 @@
 # 게임 시작 시 초기화
 # ==================================================================================================================== #
 
-on_game_started = {
-    on_actions = {
-        uboy_ui_gdpem_on_start
-    }
-}
-
-uboy_ui_gdpem_on_start = {
-    effect = {
-        every_country ={
-            event_marker_initialize_country = yes
-        }
-    }
-}
+#on_game_started = {
+#    on_actions = {
+#        uboy_ui_gdpem_on_start
+#    }
+#}
+#
+#uboy_ui_gdpem_on_start = {
+#    effect = {
+#        every_country ={
+#            event_marker_initialize_country = yes
+#        }
+#    }
+#}
 
 on_monthly_pulse ={
     on_actions = {
@@ -50,14 +50,22 @@ uboy_ui_gdpem_on_diplo_play_started = {
         if = {
             limit = { exists = scope:initiator }
             scope:initiator = {
-                event_marker_try_record_event = { EVENT_TYPE = 1 }
+                set_variable = {
+                    name = event_type
+                    value = 1
+                }
+                event_marker_try_record_event = yes
             }
         }
         
         if = {
             limit = { exists = scope:target }
             scope:target = {
-                event_marker_try_record_event = { EVENT_TYPE = 1 }
+                set_variable = {
+                    name = event_type
+                    value = 1
+                }
+                event_marker_try_record_event = yes
             }
         }
     }
@@ -125,8 +133,14 @@ on_acquired_technology = {
 
 uboy_ui_gdpem_on_technology = {
     effect = {
-        # on_acquired_technology의 Expected Scope는 country
-        event_marker_try_record_event = { EVENT_TYPE = 3 }
+        if = {
+            limit = { is_player = yes }
+            set_variable = {
+                name = event_type
+                value = 3
+            }
+            event_marker_try_record_event = yes
+        }
     }
 }
 
